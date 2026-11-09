@@ -20,4 +20,4 @@ const short RENDER_TILE_HEIGHT = 64;
 
 const int CO_RENDER_THREADS = 3;
 
-const float GRAVITY_CONSTANT = 10000.f;
+const float GRAVITY_CONSTANT = 5000.f;

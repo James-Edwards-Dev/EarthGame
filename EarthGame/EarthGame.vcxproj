@@ -146,8 +146,10 @@
     <ClInclude Include="src\BasePhysicalObject.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\MyMath.h" />
+    <ClInclude Include="src\PolyLine2D.h" />
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\SmallStructs.h" />
+    <ClInclude Include="src\Sprite.h" />
     <ClInclude Include="src\Vector2.h" />
     <ClInclude Include="TestObject.h" />
     <ClInclude Include="TestPlanet.h" />
@@ -155,6 +157,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\PolyLine2D.cpp" />
     <ClCompile Include="src\Scene.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

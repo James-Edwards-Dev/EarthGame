@@ -1,7 +1,6 @@
 #pragma once
 #include "src/BasePhysicalObject.h"
 #include "GamesEngineeringBase.h"
-#include "src/MyMath.h"
 #include "src/Scene.h"
 
 class TestPlanet : public BasePhysicalObject {
@@ -12,13 +11,15 @@ public:
 		globalPosition = { 200, 200 };
 		maxVelocity = 400;
 		rotation = 0;
-		mass = 100;
+		mass = 1000;
 		renderOrder = RenderOrder::Third;
 		prevState = { globalPosition, scale, rotation };
 		curState = { globalPosition, scale, rotation };
 		canCollide = true;
 		collisionRadius = 100;
 		isGravitySource = true;
+		// if you dont want it being moved
+		//isStatic = true;
 	}
 
 	void OnStart() override {}

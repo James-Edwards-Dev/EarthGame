@@ -9,10 +9,12 @@
 int main() {
 	bool running = true;
 	GamesEngineeringBase::Window canvas;
-	canvas.create(WINDOW_WIDTH, WINDOW_HEIGHT, "Infinite Hunger");
+	canvas.create(WINDOW_WIDTH, WINDOW_HEIGHT, "Earth Game");
 	Camera camera;
 	Scene mainScene = Scene(canvas, camera);
-	mainScene.AddObject(std::make_shared<TestObject>(canvas));
+	auto ptr = std::make_shared<TestObject>(canvas);
+	mainScene.AddObject(ptr);
+	mainScene.SetCameraTarget(ptr.get());
 	mainScene.AddObject(std::make_shared<TestPlanet>(canvas));
 
 #pragma region Timers
