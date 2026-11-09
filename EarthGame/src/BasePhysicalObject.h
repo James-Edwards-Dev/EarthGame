@@ -1,0 +1,75 @@
+#pragma once
+#include "BaseGameObject.h"
+#include "Vector2.h"
+#include <cmath>
+
+class BasePhysicalObject : public BaseGameObject {
+protected:
+	struct PhysicState {
+		Vector2 velocityS;
+		Vector2 accelerationS;
+	}prevPhysicState, curPhysicState;
+	Vector2 velocity;
+	Vector2 force;
+
+public:
+	float dampValue; // without force input, the velocity decreases to velocity * dampValue per second
+	float mass;
+	float maxVelocity;
+	float maxForce;
+	bool isFixed; // if it can be moved by constraints (not including collision)
+	float collisionRadius;
+	bool isStatic; // if it can be moved by collisions
+
+	BasePhysicalObject(GamesEngineeringBase::Window& canvas) : BaseGameObject(canvas) {
+		dampValue = 1.f;
+		mass = 1;
+		maxVelocity = 0;
+		maxForce = 0;
+		isFixed = false;
+		collisionRadius = 0;
+		isStatic = false;
+	}
+
+	virtual void UpdatePhysicPosition(const float& dt) {
+		// update position using Verlet Integration
+		// calculate damping
+		float damping = std::powf(dampValue, dt);
+		//velocity = velocity * damping;
+		velocity = curPhysicState.velocityS * damping + force / mass * dt;
+		// clamp velocity to maxVelocity
+		if (velocity.Length() > maxVelocity) {
+			velocity = velocity.Normalized() * maxVelocity;
+		}
+
+		// apply velocity
+		globalPosition = curState.globalPositionS + velocity * dt;
+	}
+
+	void UpdateVelocity(const float& dt) override {
+		velocity = (globalPosition - curState.globalPositionS) / dt;
+		curPhysicState.velocityS = velocity;
+	}
+
+	void UpdateStates() override { 
+		prevState = curState;
+		curState.globalPositionS = globalPosition;
+		curState.scaleS = scale;
+		curState.rotationS = rotation;
+		prevPhysicState = curPhysicState;
+		curPhysicState = { velocity, force };
+	}
+
+	void ResetStates() {
+		curState = { globalPosition, scale, rotation };
+		prevState = curState;
+		curPhysicState = { velocity, force };
+		prevPhysicState = curPhysicState;
+	}
+
+	Vector2 GetVelocity() const {
+		return velocity;
+	}
+
+	virtual void OnCollision(BaseGameObject* other, const Vector2& normal, const Vector2& position) {}
+};
