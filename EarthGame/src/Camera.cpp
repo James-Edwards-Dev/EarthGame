@@ -5,6 +5,9 @@
 #include "MyMath.h"
 
 void Camera::VisualUpdate(const float& dt) {
+	stepX = StepX();
+	stepY = StepY();
+
 	if (followTarget == nullptr) {
 		return;
 	}

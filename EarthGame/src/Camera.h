@@ -15,6 +15,8 @@ public:
 	short* depthGraph; // smaller means more to the front, only for objects less than 0x7F7F
 	BaseGameObject* followTarget;
 	AABB boundary;
+	float stepX;
+	float stepY;
 
 	Camera() {
 		globalPosition = Vector2();
@@ -24,6 +26,8 @@ public:
 		boundary.min.y = -1000;
 		boundary.max.x = 1000;
 		boundary.max.y = 1000;
+		stepX = StepX();
+		stepY = StepY();
 	}
 
 	// to avoid double free by copying

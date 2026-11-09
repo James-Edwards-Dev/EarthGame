@@ -99,8 +99,8 @@ public:
 				if (camera.depthGraph[j * WINDOW_WIDTH + i] < curDepth) {
 					continue;
 				}
-				offset.x = (i - screenAABB.minX) * STEP_X;
-				offset.y = (j - screenAABB.minY) * STEP_Y;
+				offset.x = (i - screenAABB.minX) * camera.stepX;
+				offset.y = (j - screenAABB.minY) * camera.stepY;
 				localPos = beginPos + offset;
 				// rotate -theta to get to the pos on texture
 				rotatedPos.x = renderCosTheta * localPos.x + renderSinTheta * localPos.y;
@@ -152,8 +152,8 @@ public:
 				if (camera.depthGraph[j * WINDOW_WIDTH + i] < curDepth) {
 					continue;
 				}
-				offset.x = (i - screenAABB.minX) * STEP_X;
-				offset.y = (j - screenAABB.minY) * STEP_Y;
+				offset.x = (i - screenAABB.minX) * camera.stepX;
+				offset.y = (j - screenAABB.minY) * camera.stepY;
 				localPos = beginPos + offset;
 				// rotate -theta to get to the pos on texture
 				rotatedPos.x = renderCosTheta * localPos.x + renderSinTheta * localPos.y;

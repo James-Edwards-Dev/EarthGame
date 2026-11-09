@@ -5,16 +5,18 @@
 
 class TestObject : public BasePhysicalObject {
 public:
-	float moveSpeed;
+	float maxForce;
 	float rotationSpeed;
 	float zoomSpeed;
 
 	TestObject(GamesEngineeringBase::Window& canvas) : BasePhysicalObject(canvas) {
 		scale = Vector2(100, 100); // a square
 		rotation = 0;
-		moveSpeed = 600; // global position per second
+		mass = 1;
+		maxForce = 600; // global position per second
+		maxVelocity = 400;
 		rotationSpeed = PI; // radians per second
-		zoomSpeed = 300; // global position per second
+		zoomSpeed = 100; // global position per second
 		renderOrder = RenderOrder::Third;
 		prevState = { globalPosition, scale, rotation };
 		curState = { globalPosition, scale, rotation };
@@ -64,13 +66,12 @@ public:
 			inputZoomV -= 1;
 		}
 
-		if (env.keyPressed(0x20)) { // space
-			isPendingDestroy = true;
-		}
-
-		globalPosition = globalPosition + inputDir * moveSpeed * dt;
+		force = inputDir * maxForce;
 		rotation = MyMath::WrapAngle(rotation + inputAngle * rotationSpeed * dt);
 		scale = scale + Vector2(inputZoomH * zoomSpeed * dt, inputZoomV * zoomSpeed * dt);
+		//FOV = FOV + inputZoomH * zoomSpeed * dt;
+		//FOV = std::clamp(FOV, 100.f, 1000.f);
+		BasePhysicalObject::UpdatePhysicPosition(dt);
 	}
 
 	void VisualUpdate(const float& dt) override { }
