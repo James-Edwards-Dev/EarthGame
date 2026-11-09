@@ -27,7 +27,14 @@ void Scene::AddObject(std::shared_ptr<BaseGameObject> obj) {
 	BaseGameObject* raw = obj.get();
 	raw->scene = this;
 	objects.push_back(obj);
+	if (raw->isGravitySource) {
+		auto physical = std::dynamic_pointer_cast<BasePhysicalObject>(obj);
+		if (physical) {
+			gravitySourceObjects.push_back(physical);
+		}
+	}
 	raw->OnStart();
+
 }
 
 //void Scene::AddUIObject(std::shared_ptr<ClickableText> uiObject) {
@@ -270,6 +277,36 @@ void Scene::SetCameraBoundary(const AABB& newBound) {
 
 AABB Scene::GetCameraAABB() {
 	return camera.GetAABB();
+}
+
+Vector2 Scene::GetGravityOn(BasePhysicalObject* target)
+{
+	Vector2 forceGravity(0, 0);
+	if (target->isPendingDestroy || !target->isActive) {
+		return forceGravity;
+	}
+	if (!target || target->isStatic) {
+		return forceGravity;
+	}
+
+	for (int i = gravitySourceObjects.size() - 1; i >= 0; --i) {
+		auto gravityPtr = gravitySourceObjects[i].lock();
+		if (!gravityPtr) {
+			gravitySourceObjects.erase(gravitySourceObjects.begin() + i);
+			continue;
+		}
+		if (target == gravityPtr.get()) {
+			continue;
+		}
+		Vector2 dir = gravityPtr->globalPosition - target->globalPosition;
+		float len = dir.Length();
+		if (len < 1e-4f) {
+			continue;
+		}
+		forceGravity = forceGravity + dir.Normalized() * GRAVITY_CONSTANT * target->mass * gravityPtr->mass / (len * len);
+	}
+
+	return forceGravity;
 }
 
 void Scene::RenderWorker(const float& alpha, std::atomic<int>& nextTile, std::vector<RenderedItem>& renderedItems) {

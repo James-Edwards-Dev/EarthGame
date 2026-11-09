@@ -3,6 +3,7 @@
 #include "src/Camera.h"
 #include "src/Scene.h"
 #include "TestObject.h"
+#include "TestPlanet.h"
 #include <iostream>
 
 int main() {
@@ -12,6 +13,7 @@ int main() {
 	Camera camera;
 	Scene mainScene = Scene(canvas, camera);
 	mainScene.AddObject(std::make_shared<TestObject>(canvas));
+	mainScene.AddObject(std::make_shared<TestPlanet>(canvas));
 
 #pragma region Timers
 	GamesEngineeringBase::Timer loopTimer;

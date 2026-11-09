@@ -150,6 +150,7 @@
     <ClInclude Include="src\SmallStructs.h" />
     <ClInclude Include="src\Vector2.h" />
     <ClInclude Include="TestObject.h" />
+    <ClInclude Include="TestPlanet.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

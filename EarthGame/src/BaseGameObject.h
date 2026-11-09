@@ -32,6 +32,7 @@ public:
 	float rotation = 0.f; // in rad, 0 is facing right, pi/2 is facing down
 	bool canCollide; // physics and trigger can collide
 	bool isTrigger; // test for collide but don't move
+	bool isGravitySource; 
 
 	std::function<void()> onSaving; // save to SaveManager
 
@@ -46,6 +47,7 @@ public:
 		renderVisible = false;
 		canCollide = false;
 		isTrigger = false;
+		isGravitySource = false;
 	}
 	virtual ~BaseGameObject() = default;
 

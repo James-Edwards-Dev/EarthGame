@@ -12,6 +12,7 @@
 class Scene{
 protected:
 	std::vector<std::shared_ptr<BaseGameObject>> objects;
+	std::vector<std::weak_ptr<BasePhysicalObject>> gravitySourceObjects;
 	//std::vector<std::shared_ptr<ClickableText>> uiObjects;
 	GamesEngineeringBase::Window& canvas;
 	Camera& camera;
@@ -43,6 +44,7 @@ public:
 	Vector2 GetCameraTargetPos();
 	void SetCameraBoundary(const AABB& newBound);
 	AABB GetCameraAABB();
+	Vector2 GetGravityOn(BasePhysicalObject* target);
 
 private:
 	void RenderWorker(const float& alpha, std::atomic<int>& nextTile, std::vector<RenderedItem>& renderedItems);
