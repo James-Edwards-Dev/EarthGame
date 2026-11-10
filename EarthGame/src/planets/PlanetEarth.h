@@ -10,11 +10,11 @@ class PlanetEarth : public BasePlanet {
 private:
 	LaunchController launchController;
 	float minFOV = 120;
-	float maxFOV = 3840;
+	float maxFOV = 3000;
 	PolyLine2D* dirLine;
 	float waitTime = 0;
 	float hesitateWaitTime = 30;
-	float solarSystemRadius = 3000;
+	float solarSystemRadius = 3500;
 
 	std::string GetSpritePath() const override {
 		return "./assets/planet03.png";
@@ -52,19 +52,15 @@ public:
 	}
 
 	void VisualUpdate(const float& dt) override {
-		waitTime += dt;
-		if (waitTime >= hesitateWaitTime) {
-			scene->ChangeScene(SceneType::HesitateEnd);
-		}
-
 		launchController.UpdateInput();
 		LaunchState s = launchController.GetState();
+
 		if (s == LaunchState::Flying) {
 			float alpha = std::clamp(
 				(globalPosition-parentPlanet.lock()->globalPosition).Length(),
 				0.f,
-				1800.f)
-				/ 1800.f;
+				1400.f)
+				/ 1400.f;
 			FOV = MyMath::Lerp(FOV, minFOV * (1 - alpha) + maxFOV * alpha, dt * 1.5);
 
 			float distanceToSun = (parentPlanet.lock()->globalPosition - globalPosition).Length();
@@ -73,6 +69,7 @@ public:
 			}
 		}
 		else if (s == LaunchState::Aiming) {
+			waitTime += dt;
 			dirLine->points.clear();
 			Vector2 dir = launchController.GetLaunchDrag().Normalized();
 			Vector2 speedDelta = dir * launchController.launchStrength / mass;
@@ -84,12 +81,21 @@ public:
 			}
 		}
 		else {
+			waitTime += dt;
 			FOV = MyMath::Lerp(FOV, 1080.f, dt * 0.5f);
+		}
+
+		if (waitTime >= hesitateWaitTime) {
+			scene->ChangeScene(SceneType::HesitateEnd);
 		}
 	}
 
 	void OnRelease() override {
 		//dampValue = 0.95f;
 		dirLine->isPendingDestroy = true;
+	}
+
+	void OnCollision(BaseGameObject* other, const Vector2& normal, const Vector2& position) override {
+
 	}
 };

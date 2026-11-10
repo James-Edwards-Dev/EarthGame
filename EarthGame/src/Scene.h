@@ -23,7 +23,6 @@ protected:
 	SceneType nextScene;
 	 
 public:
-
 	Scene(GamesEngineeringBase::Window& window, Camera& camera);
 
 	virtual ~Scene() {

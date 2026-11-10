@@ -1,13 +1,12 @@
 #include"LaunchController.h"
 #include"Camera.h"
 #include"../TestObject.h"
-#include<iostream>
 
 LaunchController::LaunchController(GamesEngineeringBase::Window& win, BasePlanet* target)
 	: canvas(win), earth(target) {
 	launchPoint = {};
 	leftMouseDown = canvas.mouseButtonPressed(GamesEngineeringBase::MouseLeft);
-	launchStrength = 2646.f;
+	launchStrength = 2600.f;
 }
 
 void LaunchController::UpdateInput() {
@@ -45,7 +44,6 @@ void LaunchController::UpdateAiming() {
 void LaunchController::Release() {
 	Vector2 launchImpulse;
 	launchImpulse = mouseDirection.Normalized() * launchStrength;//J = d*k
-	std::cout << "Launch X: " << launchImpulse.x << " Y: " << launchImpulse.y << std::endl;
 	earth->AddForce(launchImpulse);
 	state = LaunchState::Flying;
 	earth->scale = startScale;
