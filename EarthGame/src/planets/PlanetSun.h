@@ -9,16 +9,16 @@ private:
 
 public:
 	PlanetSun(GamesEngineeringBase::Window& canvas) : BasePlanet(canvas) {
-		scale = Vector2(200, 200);
+		scale = Vector2(300, 300);
 		globalPosition = { 0, 0 };
 		maxVelocity = 100;
 		rotation = 0;
-		mass = 4000;
+		mass = 9000;
 		renderOrder = RenderOrder::Second;
 		prevState = { globalPosition, scale, rotation };
 		curState = { globalPosition, scale, rotation };
 		canCollide = true;
-		collisionRadius = 80;
+		collisionRadius = 120;
 		isGravitySource = true;
 		isStatic = true;
 

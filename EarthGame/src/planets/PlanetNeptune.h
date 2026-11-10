@@ -10,15 +10,15 @@ private:
 public:
 	PlanetNeptune(GamesEngineeringBase::Window& canvas)
 		: BasePlanet(canvas) {
-		scale = Vector2(125, 125);
+		scale = Vector2(150, 150);
 		rotation = 0;
-		mass = 200;
+		mass = 500;
 		renderOrder = RenderOrder::Second;
 		canCollide = true;
-		collisionRadius = 50;
+		collisionRadius = 60;
 		isGravitySource = true;
 		isStatic = false;
 
-		orbitHeight = 1500;
+		orbitHeight = 2000;
 	}
 };

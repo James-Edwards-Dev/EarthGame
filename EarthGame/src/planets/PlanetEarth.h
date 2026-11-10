@@ -10,7 +10,7 @@ class PlanetEarth : public BasePlanet {
 private:
 	LaunchController launchController;
 	float minFOV = 120;
-	float maxFOV = 2560;
+	float maxFOV = 3840;
 	PolyLine2D* dirLine;
 
 	std::string GetSpritePath() const override {
@@ -20,25 +20,25 @@ private:
 public:
 	PlanetEarth(GamesEngineeringBase::Window& canvas) 
 		: BasePlanet(canvas), launchController(canvas, this) {
-		scale = Vector2(75, 75);
-		maxVelocity = 1000;
+		scale = Vector2(100, 100);
+		maxVelocity = 1e10;
 		rotation = 0;
-		mass = 10;
+		mass = 20;
 		renderOrder = RenderOrder::Third;
 		canCollide = true;
-		collisionRadius = 30;
+		collisionRadius = 40;
 		isGravitySource = true;
 		isStatic = false;
 		dirLine = nullptr;
 
-		orbitHeight = 150;
+		orbitHeight = 300;
 	}
 
 	void OnStart() override {
 		BasePlanet::OnStart();
 		auto ptr = std::make_shared<PolyLine2D>(env);
-		ptr->thickness = 3;
-		ptr->lineColor = { 200,200,200,255 };;
+		ptr->thickness = 20.f;
+		ptr->lineColor = { 200,200,200,255 };
 		dirLine = ptr.get();
 		scene->AddObject(ptr);
 	}
@@ -55,8 +55,8 @@ public:
 			float alpha = std::clamp(
 				(globalPosition-parentPlanet.lock()->globalPosition).Length(),
 				0.f,
-				900.f)
-				/ 900.f;
+				1800.f)
+				/ 1800.f;
 			FOV = MyMath::Lerp(FOV, minFOV * (1 - alpha) + maxFOV * alpha, dt * 1.5);
 		}
 		else if (s == LaunchState::Aiming) {
@@ -71,12 +71,12 @@ public:
 			}
 		}
 		else {
-			FOV = MyMath::Lerp(FOV, 720.f, dt * 0.5f);
+			FOV = MyMath::Lerp(FOV, 1080.f, dt * 0.5f);
 		}
 	}
 
 	void OnRelease() override {
-		dampValue = 0.95f;
+		//dampValue = 0.95f;
 		dirLine->isPendingDestroy = true;
 	}
 };

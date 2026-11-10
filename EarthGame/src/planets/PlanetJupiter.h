@@ -10,16 +10,15 @@ private:
 public:
 	PlanetJupiter(GamesEngineeringBase::Window& canvas)
 		: BasePlanet(canvas) {
-		scale = Vector2(150, 150);
+		scale = Vector2(200, 200);
 		rotation = 0;
-		mass = 100;
+		mass = 200;
 		renderOrder = RenderOrder::Second;
 		canCollide = true;
-		collisionRadius = 60;
+		collisionRadius = 80;
 		isGravitySource = true;
 		isStatic = false;
-		isClockwise = false;
 
-		orbitHeight = 500;
+		orbitHeight = 900;
 	}
 };

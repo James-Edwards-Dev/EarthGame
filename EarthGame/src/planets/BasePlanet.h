@@ -18,7 +18,7 @@ public:
 	BasePlanet(GamesEngineeringBase::Window& canvas) : BasePhysicalObject(canvas) {
 		scale = Vector2(25, 25);
 		globalPosition = { 0, 0 };
-		maxVelocity = 300;
+		maxVelocity = 400;
 		rotation = 0;
 		mass = 10;
 		renderOrder = RenderOrder::Second;

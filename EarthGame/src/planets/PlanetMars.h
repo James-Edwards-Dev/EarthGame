@@ -12,15 +12,15 @@ private:
 public:
 	PlanetMars(GamesEngineeringBase::Window& canvas)
 		: BasePlanet(canvas) {
-		scale = Vector2(50, 50);
+		scale = Vector2(75, 75);
 		rotation = 0;
-		mass = 3;
+		mass = 5;
 		renderOrder = RenderOrder::Second;
 		canCollide = true;
-		collisionRadius = 20;
+		collisionRadius = 30;
 		isGravitySource = true;
 		isStatic = false;
 
-		orbitHeight = 300;
+		orbitHeight = 500;
 	}
 };
