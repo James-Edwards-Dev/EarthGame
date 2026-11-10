@@ -19,6 +19,13 @@ void Camera::VisualUpdate(const float& dt) {
 	globalPosition = MyMath::Lerp(globalPosition, tmpPos, dt * 10);
 }
 
+void Camera::SetFollowTarget(BaseGameObject* target) {
+	followTarget = target;
+	if (target) {
+		globalPosition = target->globalPosition;
+	}
+}
+
 void Camera::SetBoundary(const AABB& newBound) {
 	// the input bound is where you can see
 	// transfer that into the bound of camera pos

@@ -145,6 +145,7 @@
     <ClInclude Include="src\BaseGameObject.h" />
     <ClInclude Include="src\BasePhysicalObject.h" />
     <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\BaseEnd.h" />
     <ClInclude Include="src\MyMath.h" />
     <ClInclude Include="src\PolyLine2D.h" />
     <ClInclude Include="src\Scene.h" />

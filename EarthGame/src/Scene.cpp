@@ -3,6 +3,9 @@
 #include <functional>
 #include "BasePhysicalObject.h"
 #include "Vector2.h"
+#include "../TestObject.h"
+#include "../TestPlanet.h"
+#include "BaseEnd.h"
 
 Scene::Scene(GamesEngineeringBase::Window& window, Camera& camera) 
 	: canvas(window), camera(camera) {
@@ -17,6 +20,8 @@ Scene::Scene(GamesEngineeringBase::Window& window, Camera& camera)
 			renderTiles.push_back(renderTile);
 		}
 	}
+	isPendingSceneChange = false;
+	nextScene = SceneType::None;
 }
 
 void Scene::AddObject(std::shared_ptr<BaseGameObject> obj) {
@@ -174,6 +179,13 @@ void Scene::VisualUpdateObjects(const float& dt) {
 	//	}
 	//	uiObjects[i]->VisualUpdate(dt);
 	//}
+
+	if (isPendingSceneChange) {
+		RecycleAllObjects();
+		InitiateChangedScene();
+		isPendingSceneChange = false;
+		nextScene = SceneType::None;
+	}
 }
 
 void Scene::RenderObjects(const float& alpha) {
@@ -221,6 +233,7 @@ void Scene::RecycleObjects() {
 		auto ptr = objects[i].get();
 		if (camera.followTarget == ptr) {
 			camera.followTarget = nullptr;
+			camera.globalPosition = { 0,0 };
 		}
 
 		objects[i]->OnDestroy();
@@ -252,6 +265,76 @@ void Scene::RecycleAllObjects() {
 	//	uiObjects[i]->OnDestroy();
 	//	uiObjects.Erase(i);
 	//}
+}
+
+void Scene::ChangeScene(const SceneType& nextScene) {
+	isPendingSceneChange = true;
+	this->nextScene = nextScene;
+}
+
+void Scene::InitiateChangedScene() {
+	switch (nextScene) {
+	case SceneType::None:
+		break;
+	case SceneType::Start: {
+		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
+		SetCameraTarget(nullptr);
+		FOV = 720;
+		AddObject(ptr);
+		break;
+	}
+	case SceneType::Gameplay: {
+		auto ptr = std::make_shared<TestObject>(canvas);
+		AddObject(ptr);
+		SetCameraTarget(ptr.get());
+		AddObject(std::make_shared<TestPlanet>(canvas));
+		break;
+	}
+	case SceneType::HesitateEnd: {
+		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
+		SetCameraTarget(nullptr);
+		FOV = 720;
+		AddObject(ptr);
+		break;
+	}
+	case SceneType::IntoTheSunEnd: {
+		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
+		SetCameraTarget(nullptr);
+		FOV = 720;
+		AddObject(ptr);
+		break;
+	}
+	case SceneType::JupiterEnd: {
+		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
+		SetCameraTarget(nullptr);
+		FOV = 720;
+		AddObject(ptr);
+		break;
+	}
+	case SceneType::MarsEnd: {
+		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
+		SetCameraTarget(nullptr);
+		FOV = 720;
+		AddObject(ptr);
+		break;
+	}
+	case SceneType::NeptuneEnd: {
+		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
+		SetCameraTarget(nullptr);
+		FOV = 720;
+		AddObject(ptr);
+		break;
+	}
+	case SceneType::TheEyeEnd: {
+		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
+		SetCameraTarget(nullptr);
+		FOV = 720;
+		AddObject(ptr);
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 void Scene::SetCameraTarget(BaseGameObject* target) {

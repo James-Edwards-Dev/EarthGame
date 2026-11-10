@@ -115,9 +115,7 @@ public:
 
 	void VisualUpdate(const float& dt);
 
-	void SetFollowTarget(BaseGameObject* target) {
-		followTarget = target;
-	}
+	void SetFollowTarget(BaseGameObject* target);
 
 	void SetBoundary(const AABB& newBound);
 
