@@ -66,4 +66,6 @@ public:
 	unsigned char GetAlphaAt(const float& u, const float& v) const override {
 		return sprite.GetAlphaAt(u, v);
 	}
+	
+	virtual void OnRelease() {}
 };

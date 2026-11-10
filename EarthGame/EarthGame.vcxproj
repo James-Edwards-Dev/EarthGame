@@ -151,6 +151,7 @@
     <ClInclude Include="src\planets\PlanetEarth.h" />
     <ClInclude Include="src\planets\PlanetJupiter.h" />
     <ClInclude Include="src\planets\PlanetMars.h" />
+    <ClInclude Include="src\planets\PlanetNeptune.h" />
     <ClInclude Include="src\PolyLine2D.h" />
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\SmallStructs.h" />

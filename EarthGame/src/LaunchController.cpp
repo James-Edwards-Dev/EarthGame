@@ -3,11 +3,11 @@
 #include"../TestObject.h"
 #include<iostream>
 
-LaunchController::LaunchController(GamesEngineeringBase::Window& win, BasePhysicalObject* target)
+LaunchController::LaunchController(GamesEngineeringBase::Window& win, BasePlanet* target)
 	: canvas(win), earth(target) {
 	launchPoint = {};
 	leftMouseDown = canvas.mouseButtonPressed(GamesEngineeringBase::MouseLeft);
-	launchStrength = 435.f;
+	launchStrength = 794.f;
 }
 
 void LaunchController::UpdateInput() {
@@ -50,4 +50,5 @@ void LaunchController::Release() {
 	state = LaunchState::Flying;
 	earth->scale = startScale;
 	earth->UpdateStates();
+	earth->OnRelease();
 }

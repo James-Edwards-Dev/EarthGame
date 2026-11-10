@@ -4,18 +4,18 @@
 class PlanetJupiter : public BasePlanet {
 private:
 	std::string GetSpritePath() const override {
-		return "./assets/planet08.png";
+		return "./assets/planet05.png";
 	}
 
 public:
 	PlanetJupiter(GamesEngineeringBase::Window& canvas)
 		: BasePlanet(canvas) {
-		scale = Vector2(50, 50);
+		scale = Vector2(150, 150);
 		rotation = 0;
-		mass = 20;
+		mass = 40;
 		renderOrder = RenderOrder::Second;
 		canCollide = true;
-		collisionRadius = 20;
+		collisionRadius = 60;
 		isGravitySource = true;
 		isStatic = false;
 

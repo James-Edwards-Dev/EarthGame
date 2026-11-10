@@ -9,7 +9,7 @@ private:
 
 public:
 	PlanetSun(GamesEngineeringBase::Window& canvas) : BasePlanet(canvas) {
-		scale = Vector2(100, 100);
+		scale = Vector2(200, 200);
 		globalPosition = { 0, 0 };
 		maxVelocity = 100;
 		rotation = 0;
@@ -18,9 +18,9 @@ public:
 		prevState = { globalPosition, scale, rotation };
 		curState = { globalPosition, scale, rotation };
 		canCollide = true;
-		collisionRadius = 40;
+		collisionRadius = 80;
 		isGravitySource = true;
-		isStatic = false;
+		isStatic = true;
 
 		orbitHeight = 0;
 	}

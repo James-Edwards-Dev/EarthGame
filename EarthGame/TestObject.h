@@ -7,7 +7,6 @@
 
 class TestObject : public BasePhysicalObject {
 private:
-	LaunchController launchController;
 	float minFOV = 360;
 	float maxFOV = 1920;
 
@@ -16,7 +15,7 @@ public:
 	Sprite sprite;
 
 	TestObject(GamesEngineeringBase::Window& canvas) :
-		BasePhysicalObject(canvas), launchController(canvas, this) {
+		BasePhysicalObject(canvas){
 		scale = { 100,100 };
 		rotation = 0;
 		mass = 300;
@@ -40,11 +39,6 @@ public:
 	}
 
 	void VisualUpdate(const float& dt) override {
-		launchController.UpdateInput();
-		if (launchController.GetState() == LaunchState::Flying) {
-			float alpha = std::clamp(velocity.Length(), 0.f, maxVelocity) / maxVelocity;
-			FOV = MyMath::Lerp(FOV, minFOV * (1 - alpha) + maxFOV * alpha, dt);
-		}
 	}
 
 	void OnDestroy() override { }
