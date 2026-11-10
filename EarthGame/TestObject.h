@@ -2,13 +2,18 @@
 #include "src/BasePhysicalObject.h"
 #include "GamesEngineeringBase.h"
 #include "src/Sprite.h"
+#include "src/LaunchController.h"
 
 class TestObject : public BasePhysicalObject {
+private:
+	LaunchController launchController;
+
 public:
 	float maxForce;
 	Sprite sprite;
 
-	TestObject(GamesEngineeringBase::Window& canvas) : BasePhysicalObject(canvas) {
+	TestObject(GamesEngineeringBase::Window& canvas) :
+		BasePhysicalObject(canvas), launchController(canvas, this) {
 		scale = Vector2(100, 100); // a square
 		rotation = 0;
 		mass = 300;
@@ -44,6 +49,8 @@ public:
 		if (inputDir.Length() > 0) {
 			inputDir = inputDir.Normalized();
 		}
+
+		launchController.UpdateInput();
 
 		force = inputDir * maxForce;
 		force = force + scene->GetGravityOn(this);

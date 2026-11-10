@@ -146,6 +146,7 @@
     <ClInclude Include="src\BasePhysicalObject.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\BaseEnd.h" />
+    <ClInclude Include="src\LaunchController.h" />
     <ClInclude Include="src\MyMath.h" />
     <ClInclude Include="src\PolyLine2D.h" />
     <ClInclude Include="src\Scene.h" />
@@ -158,6 +159,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\LaunchController.cpp" />
     <ClCompile Include="src\PolyLine2D.cpp" />
     <ClCompile Include="src\Scene.cpp" />
   </ItemGroup>

@@ -71,5 +71,14 @@ public:
 		return velocity;
 	}
 
+	void AddForce(const Vector2& force) {
+		if (mass < 1e-4f) {
+			return;
+		}
+		Vector2 velocityDelta = force / mass;
+		curPhysicState.velocityS = curPhysicState.velocityS + velocityDelta;
+		velocity = curPhysicState.velocityS;
+	}
+
 	virtual void OnCollision(BaseGameObject* other, const Vector2& normal, const Vector2& position) {}
 };
