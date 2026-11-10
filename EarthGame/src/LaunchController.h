@@ -18,7 +18,7 @@ class LaunchController {
 private:
 	LaunchState state = LaunchState::Ready;
 
-	float launchStrength = 1000.0f;
+	float launchStrength;
 
 	bool leftMouseDown = false;
 
@@ -32,7 +32,7 @@ private:
 	void Release();
 public:
 	float minDragDistance = 10.f;
-	float maxDragDistance = 200.0f;
+	float maxDragDistance = 400.0f;
 
 	LaunchController(GamesEngineeringBase::Window& win,
 		BasePhysicalObject* target);

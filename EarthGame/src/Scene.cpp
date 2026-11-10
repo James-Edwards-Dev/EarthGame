@@ -8,6 +8,8 @@
 #include "BaseEnd.h"
 #include "planets/PlanetEarth.h"
 #include "planets/PlanetSun.h"
+#include "planets/PlanetJupiter.h"
+#include "planets/PlanetMars.h"
 
 Scene::Scene(GamesEngineeringBase::Window& window, Camera& camera) 
 	: canvas(window), camera(camera) {
@@ -288,10 +290,22 @@ void Scene::InitiateChangedScene() {
 	case SceneType::Gameplay: {
 		auto sunPtr = std::make_shared<PlanetSun>(canvas);
 		AddObject(sunPtr);
-		auto ptr = std::make_shared<PlanetEarth>(canvas);
-		ptr->SetParentPlanet(sunPtr);
-		SetCameraTarget(ptr.get());
-		AddObject(ptr);
+		{
+			auto ptr = std::make_shared<PlanetEarth>(canvas);
+			ptr->SetParentPlanet(sunPtr);
+			SetCameraTarget(ptr.get());
+			AddObject(ptr);
+		}
+		{
+			auto ptr = std::make_shared<PlanetJupiter>(canvas);
+			ptr->SetParentPlanet(sunPtr);
+			AddObject(ptr);
+		}
+		{
+			auto ptr = std::make_shared<PlanetMars>(canvas);
+			ptr->SetParentPlanet(sunPtr);
+			AddObject(ptr);
+		}
 		break;
 	}
 	case SceneType::HesitateEnd: {

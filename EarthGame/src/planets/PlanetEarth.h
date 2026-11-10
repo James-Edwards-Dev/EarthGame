@@ -20,14 +20,19 @@ public:
 		scale = Vector2(25, 25);
 		maxVelocity = 1000;
 		rotation = 0;
-		mass = 10;
+		mass = 3;
 		renderOrder = RenderOrder::Third;
 		canCollide = true;
 		collisionRadius = 10;
 		isGravitySource = true;
 		isStatic = false;
 
-		orbitHeight = 300;
+		orbitHeight = 150;
+	}
+
+	void FixedUpdate(const float& dt) override {
+		force = scene->GetGravityOn(this);
+		BasePhysicalObject::UpdatePhysicPosition(dt);
 	}
 
 	void VisualUpdate(const float& dt) override {
