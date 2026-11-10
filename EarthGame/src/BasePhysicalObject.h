@@ -28,7 +28,7 @@ public:
 		maxForce = 0;
 		isFixed = false;
 		collisionRadius = 0;
-		isStatic = false;
+		isStatic = true;
 	}
 
 	virtual void UpdatePhysicPosition(const float& dt) {
