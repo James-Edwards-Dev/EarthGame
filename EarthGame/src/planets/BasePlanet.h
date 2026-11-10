@@ -12,12 +12,13 @@ protected:
 	float orbitHeight;
 	Sprite sprite;
 	virtual std::string GetSpritePath() const = 0;
+	bool isClockwise;
 
 public:
 	BasePlanet(GamesEngineeringBase::Window& canvas) : BasePhysicalObject(canvas) {
 		scale = Vector2(25, 25);
 		globalPosition = { 0, 0 };
-		maxVelocity = 200;
+		maxVelocity = 300;
 		rotation = 0;
 		mass = 10;
 		renderOrder = RenderOrder::Second;
@@ -27,6 +28,7 @@ public:
 		collisionRadius = 10;
 		isGravitySource = true;
 		isStatic = false;
+		isClockwise = true;
 
 		orbitHeight = 0;
 	}
@@ -34,15 +36,22 @@ public:
 	void OnStart() override {
 		sprite.Load(GetSpritePath());
 		if (auto p = parentPlanet.lock()) {
-			float speed = std::sqrt(GRAVITY_CONSTANT * p->mass / orbitHeight);
+			float speed = std::sqrt(GRAVITY_CONSTANT / orbitHeight * p->mass);
 			std::random_device rd;
 			std::mt19937 rng(rd());
 			std::uniform_real_distribution<> dis(0.0, TWO_PI);
 			double phase = dis(rng);
 
 			TeleportTo(p->globalPosition + Vector2{(float)std::cos(phase) * orbitHeight, (float)std::sin(phase) * orbitHeight});
-			curPhysicState.velocityS = 
-				p->curPhysicState.velocityS + Vector2{ (float)std::sin(phase) * speed, -(float)std::cos(phase) * speed };
+			if (isClockwise) {
+				curPhysicState.velocityS =
+					p->curPhysicState.velocityS + Vector2{ (float)std::sin(phase) * speed, -(float)std::cos(phase) * speed };
+			}
+			else {
+				curPhysicState.velocityS =
+					p->curPhysicState.velocityS + Vector2{ -(float)std::sin(phase) * speed, (float)std::cos(phase) * speed };
+			}
+			
 			velocity = curPhysicState.velocityS;
 		}
 	}

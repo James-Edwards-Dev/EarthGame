@@ -12,13 +12,14 @@ public:
 		: BasePlanet(canvas) {
 		scale = Vector2(150, 150);
 		rotation = 0;
-		mass = 40;
+		mass = 100;
 		renderOrder = RenderOrder::Second;
 		canCollide = true;
 		collisionRadius = 60;
 		isGravitySource = true;
 		isStatic = false;
+		isClockwise = false;
 
-		orbitHeight = 450;
+		orbitHeight = 500;
 	}
 };

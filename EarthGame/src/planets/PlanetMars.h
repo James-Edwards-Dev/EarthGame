@@ -1,5 +1,7 @@
 #pragma once
 #include "BasePlanet.h"
+#include "../BasePhysicalObject.h"
+#include "../Scene.h"
 
 class PlanetMars : public BasePlanet {
 private:
@@ -12,13 +14,13 @@ public:
 		: BasePlanet(canvas) {
 		scale = Vector2(50, 50);
 		rotation = 0;
-		mass = 2;
+		mass = 3;
 		renderOrder = RenderOrder::Second;
 		canCollide = true;
 		collisionRadius = 20;
 		isGravitySource = true;
 		isStatic = false;
 
-		orbitHeight = 250;
+		orbitHeight = 300;
 	}
 };

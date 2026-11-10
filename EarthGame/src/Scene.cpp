@@ -166,6 +166,10 @@ void Scene::FixedUpdateObjects(const float& dt) {
 		}
 		objects[i]->UpdateStates();
 	}
+
+	if (canvas.keyPressed('R')) {
+		ChangeScene(SceneType::Gameplay);
+	}
 }
 
 void Scene::VisualUpdateObjects(const float& dt) {
@@ -289,6 +293,7 @@ void Scene::InitiateChangedScene() {
 		break;
 	}
 	case SceneType::Gameplay: {
+		FOV = 3840;
 		auto sunPtr = std::make_shared<PlanetSun>(canvas);
 		AddObject(sunPtr);
 		{

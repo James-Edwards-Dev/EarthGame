@@ -10,7 +10,7 @@ class PlanetEarth : public BasePlanet {
 private:
 	LaunchController launchController;
 	float minFOV = 120;
-	float maxFOV = 1920;
+	float maxFOV = 2560;
 	PolyLine2D* dirLine;
 
 	std::string GetSpritePath() const override {
@@ -23,7 +23,7 @@ public:
 		scale = Vector2(75, 75);
 		maxVelocity = 1000;
 		rotation = 0;
-		mass = 3;
+		mass = 10;
 		renderOrder = RenderOrder::Third;
 		canCollide = true;
 		collisionRadius = 30;
@@ -70,10 +70,13 @@ public:
 					* std::clamp(speedDelta.Length(), 50.f, 200.f));
 			}
 		}
+		else {
+			FOV = MyMath::Lerp(FOV, 720.f, dt * 0.5f);
+		}
 	}
 
 	void OnRelease() override {
-		dampValue = 0.9f;
+		dampValue = 0.95f;
 		dirLine->isPendingDestroy = true;
 	}
 };

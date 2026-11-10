@@ -7,7 +7,7 @@ LaunchController::LaunchController(GamesEngineeringBase::Window& win, BasePlanet
 	: canvas(win), earth(target) {
 	launchPoint = {};
 	leftMouseDown = canvas.mouseButtonPressed(GamesEngineeringBase::MouseLeft);
-	launchStrength = 794.f;
+	launchStrength = 1764.f;
 }
 
 void LaunchController::UpdateInput() {

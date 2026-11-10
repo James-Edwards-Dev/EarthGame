@@ -13,7 +13,7 @@ public:
 		globalPosition = { 0, 0 };
 		maxVelocity = 100;
 		rotation = 0;
-		mass = 900;
+		mass = 4000;
 		renderOrder = RenderOrder::Second;
 		prevState = { globalPosition, scale, rotation };
 		curState = { globalPosition, scale, rotation };
