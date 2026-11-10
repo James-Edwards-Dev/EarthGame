@@ -22,10 +22,10 @@ public:
 		globalPosition = Vector2();
 		depthGraph = new short[WINDOW_WIDTH * WINDOW_HEIGHT];
 		ClearDepthGraph();
-		boundary.min.x = -1000;
-		boundary.min.y = -1000;
-		boundary.max.x = 1000;
-		boundary.max.y = 1000;
+		boundary.min.x = -100000;
+		boundary.min.y = -100000;
+		boundary.max.x = 100000;
+		boundary.max.y = 100000;
 		stepX = StepX();
 		stepY = StepY();
 	}

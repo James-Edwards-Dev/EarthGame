@@ -3,10 +3,13 @@
 #include "GamesEngineeringBase.h"
 #include "src/Sprite.h"
 #include "src/LaunchController.h"
+#include "src/MyMath.h"
 
 class TestObject : public BasePhysicalObject {
 private:
 	LaunchController launchController;
+	float minFOV = 360;
+	float maxFOV = 1920;
 
 public:
 	float maxForce;
@@ -18,7 +21,7 @@ public:
 		rotation = 0;
 		mass = 300;
 		maxForce = 400 * mass; // global position per second
-		maxVelocity = 400;
+		maxVelocity = 1000;
 		renderOrder = RenderOrder::Third;
 		prevState = { globalPosition, scale, rotation };
 		curState = { globalPosition, scale, rotation };
@@ -38,6 +41,10 @@ public:
 
 	void VisualUpdate(const float& dt) override {
 		launchController.UpdateInput();
+		if (launchController.GetState() == LaunchState::Flying) {
+			float alpha = std::clamp(velocity.Length(), 0.f, maxVelocity) / maxVelocity;
+			FOV = MyMath::Lerp(FOV, minFOV * (1 - alpha) + maxFOV * alpha, dt);
+		}
 	}
 
 	void OnDestroy() override { }
