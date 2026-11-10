@@ -12,6 +12,9 @@ private:
 	float minFOV = 120;
 	float maxFOV = 3840;
 	PolyLine2D* dirLine;
+	float waitTime = 0;
+	float hesitateWaitTime = 30;
+	float solarSystemRadius = 3000;
 
 	std::string GetSpritePath() const override {
 		return "./assets/planet03.png";
@@ -49,6 +52,11 @@ public:
 	}
 
 	void VisualUpdate(const float& dt) override {
+		waitTime += dt;
+		if (waitTime >= hesitateWaitTime) {
+			scene->ChangeScene(SceneType::HesitateEnd);
+		}
+
 		launchController.UpdateInput();
 		LaunchState s = launchController.GetState();
 		if (s == LaunchState::Flying) {
@@ -58,6 +66,11 @@ public:
 				1800.f)
 				/ 1800.f;
 			FOV = MyMath::Lerp(FOV, minFOV * (1 - alpha) + maxFOV * alpha, dt * 1.5);
+
+			float distanceToSun = (parentPlanet.lock()->globalPosition - globalPosition).Length();
+			if (distanceToSun > solarSystemRadius) {
+				scene->ChangeScene(SceneType::TheEyeEnd);
+			}
 		}
 		else if (s == LaunchState::Aiming) {
 			dirLine->points.clear();

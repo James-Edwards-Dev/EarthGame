@@ -168,7 +168,7 @@ void Scene::FixedUpdateObjects(const float& dt) {
 	}
 
 	if (canvas.keyPressed('R')) {
-		ChangeScene(SceneType::Gameplay);
+		ChangeScene(SceneType::Start);
 	}
 }
 
@@ -288,6 +288,7 @@ void Scene::InitiateChangedScene() {
 	case SceneType::Start: {
 		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
 		SetCameraTarget(nullptr);
+		camera.globalPosition = { 0,0 };
 		FOV = 720;
 		AddObject(ptr);
 		break;
@@ -322,6 +323,7 @@ void Scene::InitiateChangedScene() {
 	case SceneType::HesitateEnd: {
 		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
 		SetCameraTarget(nullptr);
+		camera.globalPosition = { 0,0 };
 		FOV = 720;
 		AddObject(ptr);
 		break;
@@ -329,6 +331,7 @@ void Scene::InitiateChangedScene() {
 	case SceneType::IntoTheSunEnd: {
 		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
 		SetCameraTarget(nullptr);
+		camera.globalPosition = { 0,0 };
 		FOV = 720;
 		AddObject(ptr);
 		break;
@@ -336,6 +339,7 @@ void Scene::InitiateChangedScene() {
 	case SceneType::JupiterEnd: {
 		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
 		SetCameraTarget(nullptr);
+		camera.globalPosition = { 0,0 };
 		FOV = 720;
 		AddObject(ptr);
 		break;
@@ -343,6 +347,7 @@ void Scene::InitiateChangedScene() {
 	case SceneType::MarsEnd: {
 		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
 		SetCameraTarget(nullptr);
+		camera.globalPosition = { 0,0 };
 		FOV = 720;
 		AddObject(ptr);
 		break;
@@ -350,6 +355,7 @@ void Scene::InitiateChangedScene() {
 	case SceneType::NeptuneEnd: {
 		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
 		SetCameraTarget(nullptr);
+		camera.globalPosition = { 0,0 };
 		FOV = 720;
 		AddObject(ptr);
 		break;
@@ -357,6 +363,7 @@ void Scene::InitiateChangedScene() {
 	case SceneType::TheEyeEnd: {
 		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
 		SetCameraTarget(nullptr);
+		camera.globalPosition = { 0,0 };
 		FOV = 720;
 		AddObject(ptr);
 		break;
@@ -381,14 +388,6 @@ Vector2 Scene::GetCameraTargetPos() {
 	else {
 		return camera.globalPosition;
 	}
-}
-
-Vector2 Scene::GetSunPosition() {
-	auto sun = sunObject.lock();
-	if (sun) {
-		return sun->globalPosition;
-	}
-	return Vector2(0, 0);
 }
 
 void Scene::SetCameraBoundary(const AABB& newBound) {
