@@ -39,7 +39,6 @@ void LaunchController::UpdateAiming() {
 		/ (maxDragDistance - minDragDistance);
 	earth->scale.x = startScale.x * (1 + alpha);
 	earth->scale.y = startScale.x / (1 + alpha);
-	earth->UpdateStates();
 }
 
 void LaunchController::Release() {

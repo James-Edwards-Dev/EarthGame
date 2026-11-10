@@ -3,9 +3,11 @@
 #include <functional>
 #include "BasePhysicalObject.h"
 #include "Vector2.h"
-#include "../TestObject.h"
-#include "../TestPlanet.h"
+//#include "../TestObject.h"
+//#include "../TestPlanet.h"
 #include "BaseEnd.h"
+#include "planets/PlanetEarth.h"
+#include "planets/PlanetSun.h"
 
 Scene::Scene(GamesEngineeringBase::Window& window, Camera& camera) 
 	: canvas(window), camera(camera) {
@@ -284,10 +286,12 @@ void Scene::InitiateChangedScene() {
 		break;
 	}
 	case SceneType::Gameplay: {
-		auto ptr = std::make_shared<TestObject>(canvas);
-		AddObject(ptr);
+		auto sunPtr = std::make_shared<PlanetSun>(canvas);
+		AddObject(sunPtr);
+		auto ptr = std::make_shared<PlanetEarth>(canvas);
+		ptr->SetParentPlanet(sunPtr);
 		SetCameraTarget(ptr.get());
-		AddObject(std::make_shared<TestPlanet>(canvas));
+		AddObject(ptr);
 		break;
 	}
 	case SceneType::HesitateEnd: {
