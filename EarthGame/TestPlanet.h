@@ -19,7 +19,7 @@ public:
 		collisionRadius = 100;
 		isGravitySource = true;
 		// if you dont want it being moved
-		//isStatic = true;
+		isStatic = true;
 	}
 
 	void OnStart() override {}

@@ -4,6 +4,7 @@
 #include "src/Scene.h"
 #include "TestObject.h"
 #include "TestPlanet.h"
+#include "src/LaunchController.h"
 #include <iostream>
 
 int main() {
@@ -13,6 +14,7 @@ int main() {
 	Camera camera;
 	Scene mainScene = Scene(canvas, camera);
 	auto ptr = std::make_shared<TestObject>(canvas);
+	LaunchController launcher(canvas, camera, *ptr); // get launcher
 	mainScene.AddObject(ptr);
 	mainScene.SetCameraTarget(ptr.get());
 	mainScene.AddObject(std::make_shared<TestPlanet>(canvas));
@@ -38,6 +40,7 @@ int main() {
 #pragma region PerformanceDetect
 		frameTimeCounter += frameTime;
 		if (frameTimeCounter > 1.0f) {
+			std::cout << "Ball X: " << ptr->globalPosition.x << " Y: " << ptr->globalPosition.y << std::endl;
 			std::cout << "FPS: " << frameCounter / frameTimeCounter << std::endl;
 			std::cout << "update time: " << updateTime / frameTimeCounter << std::endl;
 			std::cout << "clear time: " << clearTime / frameTimeCounter << std::endl;
@@ -57,6 +60,8 @@ int main() {
 			frameTime = 0.1f;
 		}
 		frameTimeAccumulator += frameTime;
+
+		launcher.UpdateInput();//Change the state
 
 #pragma region FixedUpdate
 		performanceTestTimer.reset();

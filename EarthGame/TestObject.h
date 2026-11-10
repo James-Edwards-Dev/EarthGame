@@ -4,6 +4,9 @@
 #include "src/Sprite.h"
 
 class TestObject : public BasePhysicalObject {
+private:
+	bool launcherLocked = true;
+	Vector2 launcherAnchor;
 public:
 	float maxForce;
 	Sprite sprite;
@@ -20,7 +23,10 @@ public:
 		canCollide = true;
 		collisionRadius = 40;
 		isGravitySource = true;
+		launcherAnchor = globalPosition;
 	}
+
+	
 
 	void OnStart() override {
 		sprite.Load("./assets/planet00.png");
@@ -48,6 +54,34 @@ public:
 		force = inputDir * maxForce;
 		force = force + scene->GetGravityOn(this);
 		BasePhysicalObject::UpdatePhysicPosition(dt);
+	}
+
+
+	//lock position
+	void SolveConstraints() override {
+		if (launcherLocked)//launcher locked
+			globalPosition = launcherAnchor;
+	}
+
+	void ApplyLaunchImpulse(const Vector2& impulse) {
+		Vector2 deltaVelocity;
+		if (mass <= 0) return;
+		deltaVelocity = impulse / mass;		//deltav = J/m
+		curPhysicState.velocityS = curPhysicState.velocityS+deltaVelocity;
+		velocity = curPhysicState.velocityS;
+	}
+
+	void SetLauncherLocked(bool locked) {
+		launcherLocked = locked;
+	}
+
+	void ResetForLaunch(const Vector2& position) {
+		launcherLocked = true;
+		launcherAnchor = position;
+		globalPosition = position;
+		velocity = Vector2();
+		force = Vector2();
+		ResetStates();
 	}
 
 	void VisualUpdate(const float& dt) override { }
