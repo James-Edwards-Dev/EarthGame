@@ -278,7 +278,7 @@ void Scene::InitiateChangedScene() {
 		break;
 	case SceneType::Start: {
 		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
-		SetCameraTarget(ptr.get());
+		SetCameraTarget(nullptr);
 		FOV = 720;
 		AddObject(ptr);
 		break;
@@ -292,42 +292,42 @@ void Scene::InitiateChangedScene() {
 	}
 	case SceneType::HesitateEnd: {
 		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
-		SetCameraTarget(ptr.get());
+		SetCameraTarget(nullptr);
 		FOV = 720;
 		AddObject(ptr);
 		break;
 	}
 	case SceneType::IntoTheSunEnd: {
 		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
-		SetCameraTarget(ptr.get());
+		SetCameraTarget(nullptr);
 		FOV = 720;
 		AddObject(ptr);
 		break;
 	}
 	case SceneType::JupiterEnd: {
 		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
-		SetCameraTarget(ptr.get());
+		SetCameraTarget(nullptr);
 		FOV = 720;
 		AddObject(ptr);
 		break;
 	}
 	case SceneType::MarsEnd: {
 		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
-		SetCameraTarget(ptr.get());
+		SetCameraTarget(nullptr);
 		FOV = 720;
 		AddObject(ptr);
 		break;
 	}
 	case SceneType::NeptuneEnd: {
 		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
-		SetCameraTarget(ptr.get());
+		SetCameraTarget(nullptr);
 		FOV = 720;
 		AddObject(ptr);
 		break;
 	}
 	case SceneType::TheEyeEnd: {
 		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
-		SetCameraTarget(ptr.get());
+		SetCameraTarget(nullptr);
 		FOV = 720;
 		AddObject(ptr);
 		break;
