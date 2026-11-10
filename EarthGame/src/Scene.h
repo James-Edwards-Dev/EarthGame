@@ -13,6 +13,7 @@ class Scene{
 protected:
 	std::vector<std::shared_ptr<BaseGameObject>> objects;
 	std::vector<std::weak_ptr<BasePhysicalObject>> gravitySourceObjects;
+	std::weak_ptr<BaseGameObject> sunObject;
 	//std::vector<std::shared_ptr<ClickableText>> uiObjects;
 	GamesEngineeringBase::Window& canvas;
 	Camera& camera;
@@ -51,6 +52,7 @@ public:
 	void SetCameraTarget(BaseGameObject* target);
 	BaseGameObject* GetCameraTarget();
 	Vector2 GetCameraTargetPos();
+	Vector2 GetSunPosition();
 	void SetCameraBoundary(const AABB& newBound);
 	AABB GetCameraAABB();
 

@@ -8,6 +8,12 @@
 class TestObject : public BasePhysicalObject {
 private:
 	LaunchController launchController;
+	
+	float waitingTime = 0.0f;
+	float maxWaitingTime = 30.0f;
+
+	float solarSystemRadius = 700.0f;
+
 	float minFOV = 360;
 	float maxFOV = 1920;
 
@@ -41,7 +47,18 @@ public:
 
 	void VisualUpdate(const float& dt) override {
 		launchController.UpdateInput();
+		if (launchController.GetState() != LaunchState::Flying) {
+			waitingTime += dt;
+		}
+		if (waitingTime >= maxWaitingTime) {
+			scene->ChangeScene(SceneType::HesitateEnd);
+		}
 		if (launchController.GetState() == LaunchState::Flying) {
+			Vector2 difference = globalPosition - scene->GetSunPosition();
+			float distanceToSun = difference.Length();
+			if (distanceToSun > solarSystemRadius) {
+				scene->ChangeScene(SceneType::TheEyeEnd);
+			}
 			float alpha = std::clamp(velocity.Length(), 0.f, maxVelocity) / maxVelocity;
 			FOV = MyMath::Lerp(FOV, minFOV * (1 - alpha) + maxFOV * alpha, dt);
 		}

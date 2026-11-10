@@ -286,8 +286,10 @@ void Scene::InitiateChangedScene() {
 	case SceneType::Gameplay: {
 		auto ptr = std::make_shared<TestObject>(canvas);
 		AddObject(ptr);
-		SetCameraTarget(ptr.get());
-		AddObject(std::make_shared<TestPlanet>(canvas));
+		camera.ResetCamera();
+		auto sunPtr = std::make_shared<TestPlanet>(canvas);
+		AddObject(sunPtr);
+		sunObject = sunPtr;
 		break;
 	}
 	case SceneType::HesitateEnd: {
@@ -352,6 +354,14 @@ Vector2 Scene::GetCameraTargetPos() {
 	else {
 		return camera.globalPosition;
 	}
+}
+
+Vector2 Scene::GetSunPosition() {
+	auto sun = sunObject.lock();
+	if (sun) {
+		return sun->globalPosition;
+	}
+	return Vector2(0, 0);
 }
 
 void Scene::SetCameraBoundary(const AABB& newBound) {
