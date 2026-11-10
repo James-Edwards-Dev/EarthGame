@@ -3,6 +3,8 @@
 #include <functional>
 #include "BasePhysicalObject.h"
 #include "Vector2.h"
+#include "../TestObject.h"
+#include "../TestPlanet.h"
 
 Scene::Scene(GamesEngineeringBase::Window& window, Camera& camera) 
 	: canvas(window), camera(camera) {
@@ -17,6 +19,8 @@ Scene::Scene(GamesEngineeringBase::Window& window, Camera& camera)
 			renderTiles.push_back(renderTile);
 		}
 	}
+	isPendingSceneChange = false;
+	nextScene = SceneType::None;
 }
 
 void Scene::AddObject(std::shared_ptr<BaseGameObject> obj) {
@@ -174,6 +178,13 @@ void Scene::VisualUpdateObjects(const float& dt) {
 	//	}
 	//	uiObjects[i]->VisualUpdate(dt);
 	//}
+
+	if (isPendingSceneChange) {
+		RecycleAllObjects();
+		InitiateChangedScene();
+		isPendingSceneChange = false;
+		nextScene = SceneType::None;
+	}
 }
 
 void Scene::RenderObjects(const float& alpha) {
@@ -252,6 +263,41 @@ void Scene::RecycleAllObjects() {
 	//	uiObjects[i]->OnDestroy();
 	//	uiObjects.Erase(i);
 	//}
+}
+
+void Scene::ChangeScene(const SceneType& nextScene) {
+	isPendingSceneChange = true;
+	this->nextScene = nextScene;
+}
+
+void Scene::InitiateChangedScene() {
+	switch (nextScene) {
+	case SceneType::None:
+		break;
+	case SceneType::Start:
+		break;
+	case SceneType::Gameplay: {
+		auto ptr = std::make_shared<TestObject>(canvas);
+		AddObject(ptr);
+		SetCameraTarget(ptr.get());
+		AddObject(std::make_shared<TestPlanet>(canvas));
+		break;
+	}
+	case SceneType::HesitateEnd:
+		break;
+	case SceneType::IntoTheSunEnd:
+		break;
+	case SceneType::JupiterEnd:
+		break;
+	case SceneType::MarsEnd:
+		break;
+	case SceneType::NeptuneEnd:
+		break;
+	case SceneType::TheEyeEnd:
+		break;
+	default:
+		break;
+	}
 }
 
 void Scene::SetCameraTarget(BaseGameObject* target) {

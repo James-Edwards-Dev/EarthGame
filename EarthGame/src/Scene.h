@@ -18,6 +18,8 @@ protected:
 	Camera& camera;
 	std::vector<ScreenAABB> renderTiles;
 	std::vector<std::vector<RenderedItem>> renderedItemLists{ CO_RENDER_THREADS + 1 };
+	bool isPendingSceneChange;
+	SceneType nextScene;
 	 
 public:
 
@@ -36,15 +38,21 @@ public:
 	virtual void VisualUpdateObjects(const float& dt);
 	virtual void RenderObjects(const float& alpha);
 	virtual void RecycleObjects();
-	// when quit, destroy everything to ensure OnDestroy is fully triggered
+
+	// when clearing, destroy everything to ensure OnDestroy is fully triggered
 	void RecycleAllObjects();
+	// to change the scene at the end of the frame.
+	void ChangeScene(const SceneType& nextScene);
+	void InitiateChangedScene();
+
+	// returns the gravity force on a physical object.
+	Vector2 GetGravityOn(BasePhysicalObject* target);
 
 	void SetCameraTarget(BaseGameObject* target);
 	BaseGameObject* GetCameraTarget();
 	Vector2 GetCameraTargetPos();
 	void SetCameraBoundary(const AABB& newBound);
 	AABB GetCameraAABB();
-	Vector2 GetGravityOn(BasePhysicalObject* target);
 
 private:
 	void RenderWorker(const float& alpha, std::atomic<int>& nextTile, std::vector<RenderedItem>& renderedItems);

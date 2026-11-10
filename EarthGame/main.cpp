@@ -2,9 +2,8 @@
 #include "Constants.h"
 #include "src/Camera.h"
 #include "src/Scene.h"
-#include "TestObject.h"
-#include "TestPlanet.h"
 #include <iostream>
+#include "src/SmallStructs.h"
 
 int main() {
 	bool running = true;
@@ -12,10 +11,7 @@ int main() {
 	canvas.create(WINDOW_WIDTH, WINDOW_HEIGHT, "Earth Game");
 	Camera camera;
 	Scene mainScene = Scene(canvas, camera);
-	auto ptr = std::make_shared<TestObject>(canvas);
-	mainScene.AddObject(ptr);
-	mainScene.SetCameraTarget(ptr.get());
-	mainScene.AddObject(std::make_shared<TestPlanet>(canvas));
+	mainScene.ChangeScene(SceneType::Gameplay);
 
 #pragma region Timers
 	GamesEngineeringBase::Timer loopTimer;
