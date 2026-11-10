@@ -14,7 +14,7 @@ public:
 
 	TestObject(GamesEngineeringBase::Window& canvas) :
 		BasePhysicalObject(canvas), launchController(canvas, this) {
-		scale = Vector2(100, 100); // a square
+		scale = { 100,100 };
 		rotation = 0;
 		mass = 300;
 		maxForce = 400 * mass; // global position per second
@@ -32,32 +32,13 @@ public:
 	}
 
 	void FixedUpdate(const float& dt) override {
-		Vector2 inputDir = Vector2();
-		if (env.keyPressed(0x57)) { // W
-			inputDir.y += -1;
-		}
-		if (env.keyPressed(0x41)) { // A
-			inputDir.x += -1;
-		}
-		if (env.keyPressed(0x53)) { // S
-			inputDir.y += 1;
-		}
-		if (env.keyPressed(0x44)) { // D
-			inputDir.x += 1;
-		}
-
-		if (inputDir.Length() > 0) {
-			inputDir = inputDir.Normalized();
-		}
-
-		launchController.UpdateInput();
-
-		force = inputDir * maxForce;
-		force = force + scene->GetGravityOn(this);
+		force = scene->GetGravityOn(this);
 		BasePhysicalObject::UpdatePhysicPosition(dt);
 	}
 
-	void VisualUpdate(const float& dt) override { }
+	void VisualUpdate(const float& dt) override {
+		launchController.UpdateInput();
+	}
 
 	void OnDestroy() override { }
 

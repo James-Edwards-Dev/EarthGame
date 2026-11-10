@@ -13,7 +13,8 @@ void LaunchController::UpdateInput() {
 	bool isMouseLeft = canvas.mouseButtonPressed(GamesEngineeringBase::MouseLeft);//state judgement
 	if (isMouseLeft && !leftMouseDown && state == LaunchState::Ready) {
 		state = LaunchState::Aiming;
-		launchPoint = { (float)canvas.getMouseInWindowX(), (float)canvas.getMouseInWindowY() };
+		launchPoint = { (float)canvas.getMouseInWindowX(), (float)canvas.getMouseInWindowY() }; 
+		startScale = earth->scale;
 	}
 	else if (isMouseLeft && leftMouseDown && state == LaunchState::Aiming) {
 		state = LaunchState::Aiming;
@@ -32,6 +33,13 @@ void LaunchController::UpdateAiming() {
 	float distance = mouseDirection.Length();//get the distance
 	distance = std::clamp(distance, minDragDistance, maxDragDistance);
 	mouseDirection = mouseDirection.Normalized() * distance;
+
+	earth->rotation = std::atan2(mouseDirection.y, mouseDirection.x);
+	float alpha = (mouseDirection.Length() - minDragDistance)
+		/ (maxDragDistance - minDragDistance);
+	earth->scale.x = startScale.x * (1 + alpha);
+	earth->scale.y = startScale.x / (1 + alpha);
+	earth->UpdateStates();
 }
 
 void LaunchController::Release() {
@@ -40,4 +48,6 @@ void LaunchController::Release() {
 	std::cout << "Launch X: " << launchImpulse.x << " Y: " << launchImpulse.y << std::endl;
 	earth->AddForce(launchImpulse);
 	state = LaunchState::Flying;
+	earth->scale = startScale;
+	earth->UpdateStates();
 }
