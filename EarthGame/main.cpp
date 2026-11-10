@@ -11,7 +11,7 @@ int main() {
 	canvas.create(WINDOW_WIDTH, WINDOW_HEIGHT, "Earth Game");
 	Camera camera;
 	Scene mainScene = Scene(canvas, camera);
-	mainScene.ChangeScene(SceneType::Gameplay);
+	mainScene.ChangeScene(SceneType::Start);
 
 #pragma region Timers
 	GamesEngineeringBase::Timer loopTimer;
