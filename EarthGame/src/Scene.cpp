@@ -3,9 +3,14 @@
 #include <functional>
 #include "BasePhysicalObject.h"
 #include "Vector2.h"
-#include "../TestObject.h"
-#include "../TestPlanet.h"
+//#include "../TestObject.h"
+//#include "../TestPlanet.h"
 #include "BaseEnd.h"
+#include "planets/PlanetEarth.h"
+#include "planets/PlanetSun.h"
+#include "planets/PlanetJupiter.h"
+#include "planets/PlanetMars.h"
+#include "planets/PlanetNeptune.h"
 
 Scene::Scene(GamesEngineeringBase::Window& window, Camera& camera) 
 	: canvas(window), camera(camera) {
@@ -161,6 +166,10 @@ void Scene::FixedUpdateObjects(const float& dt) {
 		}
 		objects[i]->UpdateStates();
 	}
+
+	if (canvas.keyPressed('R')) {
+		ChangeScene(SceneType::Gameplay);
+	}
 }
 
 void Scene::VisualUpdateObjects(const float& dt) {
@@ -284,12 +293,30 @@ void Scene::InitiateChangedScene() {
 		break;
 	}
 	case SceneType::Gameplay: {
-		auto ptr = std::make_shared<TestObject>(canvas);
-		AddObject(ptr);
-		camera.ResetCamera();
-		auto sunPtr = std::make_shared<TestPlanet>(canvas);
+		FOV = 3840;
+		auto sunPtr = std::make_shared<PlanetSun>(canvas);
 		AddObject(sunPtr);
-		sunObject = sunPtr;
+		{
+			auto ptr = std::make_shared<PlanetEarth>(canvas);
+			ptr->SetParentPlanet(sunPtr);
+			SetCameraTarget(ptr.get());
+			AddObject(ptr);
+		}
+		{
+			auto ptr = std::make_shared<PlanetJupiter>(canvas);
+			ptr->SetParentPlanet(sunPtr);
+			AddObject(ptr);
+		}
+		{
+			auto ptr = std::make_shared<PlanetMars>(canvas);
+			ptr->SetParentPlanet(sunPtr);
+			AddObject(ptr);
+		}
+		{
+			auto ptr = std::make_shared<PlanetNeptune>(canvas);
+			ptr->SetParentPlanet(sunPtr);
+			AddObject(ptr);
+		}
 		break;
 	}
 	case SceneType::HesitateEnd: {

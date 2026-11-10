@@ -4,6 +4,7 @@
 #include "Vector2.h"
 #include "Scene.h"
 #include "BasePhysicalObject.h"
+#include "planets/BasePlanet.h"
 
 class Camera;
 class TestObject;
@@ -17,9 +18,6 @@ enum class LaunchState {
 class LaunchController {
 private:
 	LaunchState state = LaunchState::Ready;
-
-	float launchStrength = 1000.0f;
-
 	bool leftMouseDown = false;
 
 	Vector2 launchPoint;
@@ -27,15 +25,16 @@ private:
 	Vector2 startScale;
 
 	GamesEngineeringBase::Window& canvas;
-	BasePhysicalObject* earth;
+	BasePlanet* earth;
 
 	void Release();
 public:
 	float minDragDistance = 10.f;
-	float maxDragDistance = 200.0f;
+	float maxDragDistance = 400.0f;
+	float launchStrength;
 
 	LaunchController(GamesEngineeringBase::Window& win,
-		BasePhysicalObject* target);
+		BasePlanet* target);
 
 	void UpdateInput();
 

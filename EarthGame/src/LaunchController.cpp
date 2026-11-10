@@ -3,10 +3,11 @@
 #include"../TestObject.h"
 #include<iostream>
 
-LaunchController::LaunchController(GamesEngineeringBase::Window& win, BasePhysicalObject* target)
+LaunchController::LaunchController(GamesEngineeringBase::Window& win, BasePlanet* target)
 	: canvas(win), earth(target) {
 	launchPoint = {};
 	leftMouseDown = canvas.mouseButtonPressed(GamesEngineeringBase::MouseLeft);
+	launchStrength = 2646.f;
 }
 
 void LaunchController::UpdateInput() {
@@ -39,15 +40,15 @@ void LaunchController::UpdateAiming() {
 		/ (maxDragDistance - minDragDistance);
 	earth->scale.x = startScale.x * (1 + alpha);
 	earth->scale.y = startScale.x / (1 + alpha);
-	earth->UpdateStates();
 }
 
 void LaunchController::Release() {
 	Vector2 launchImpulse;
-	launchImpulse = mouseDirection * launchStrength;//J = d*k
+	launchImpulse = mouseDirection.Normalized() * launchStrength;//J = d*k
 	std::cout << "Launch X: " << launchImpulse.x << " Y: " << launchImpulse.y << std::endl;
 	earth->AddForce(launchImpulse);
 	state = LaunchState::Flying;
 	earth->scale = startScale;
 	earth->UpdateStates();
+	earth->OnRelease();
 }

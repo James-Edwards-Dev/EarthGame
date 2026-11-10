@@ -22,7 +22,7 @@ public:
 	Sprite sprite;
 
 	TestObject(GamesEngineeringBase::Window& canvas) :
-		BasePhysicalObject(canvas), launchController(canvas, this) {
+		BasePhysicalObject(canvas){
 		scale = { 100,100 };
 		rotation = 0;
 		mass = 300;
