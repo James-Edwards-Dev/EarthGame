@@ -5,6 +5,10 @@
 #include "../MyMath.h"
 #include "../PolyLine2D.h"
 #include "../Scene.h"
+#include "PlanetJupiter.h"
+#include "PlanetSun.h"
+#include "PlanetMars.h"
+#include "PlanetNeptune.h"
 
 class PlanetEarth : public BasePlanet {
 private:
@@ -96,6 +100,21 @@ public:
 	}
 
 	void OnCollision(BaseGameObject* other, const Vector2& normal, const Vector2& position) override {
-
+		if (auto ptr = dynamic_cast<PlanetSun*>(other)) {
+			scene->ChangeScene(SceneType::IntoTheSunEnd);
+			return;
+		}
+		if (auto ptr = dynamic_cast<PlanetJupiter*>(other)) {
+			scene->ChangeScene(SceneType::JupiterEnd);
+			return;
+		}
+		if (auto ptr = dynamic_cast<PlanetMars*>(other)) {
+			scene->ChangeScene(SceneType::MarsEnd);
+			return;
+		}
+		if (auto ptr = dynamic_cast<PlanetNeptune*>(other)) {
+			scene->ChangeScene(SceneType::NeptuneEnd);
+			return;
+		}
 	}
 };
