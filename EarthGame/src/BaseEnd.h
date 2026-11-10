@@ -1,6 +1,6 @@
 #pragma once
 #include "BaseGameObject.h"
-#include "../../GamesEngineeringBase.h"
+#include "../GamesEngineeringBase.h"
 #include "Sprite.h"
 #include <string>
 #include "Scene.h"
