@@ -9,6 +9,7 @@
 #include "PlanetSun.h"
 #include "PlanetMars.h"
 #include "PlanetNeptune.h"
+#include "../ObjectTimer.h"
 
 class PlanetEarth : public BasePlanet {
 private:
@@ -19,6 +20,7 @@ private:
 	float waitTime = 0;
 	float hesitateWaitTime = 30;
 	float solarSystemRadius = 3500;
+	bool hit;
 
 	std::string GetSpritePath() const override {
 		return "./assets/planet03.png";
@@ -31,14 +33,15 @@ public:
 		maxVelocity = 1e10;
 		rotation = 0;
 		mass = 20;
-		renderOrder = RenderOrder::Third;
+		renderOrder = RenderOrder::Second;
 		canCollide = true;
 		collisionRadius = 40;
 		isGravitySource = true;
 		isStatic = false;
 		dirLine = nullptr;
 
-		orbitHeight = 300;
+		orbitHeight = 250;
+		hit = false;
 	}
 
 	void OnStart() override {
@@ -51,11 +54,11 @@ public:
 	}
 
 	void FixedUpdate(const float& dt) override {
-		force = scene->GetGravityOn(this);
-		BasePhysicalObject::UpdatePhysicPosition(dt);
+		BasePlanet::FixedUpdate(dt);
 	}
 
 	void VisualUpdate(const float& dt) override {
+		BasePlanet::VisualUpdate(dt);
 		launchController.UpdateInput();
 		LaunchState s = launchController.GetState();
 
@@ -100,20 +103,44 @@ public:
 	}
 
 	void OnCollision(BaseGameObject* other, const Vector2& normal, const Vector2& position) override {
+		if (hit) {
+			return;
+		}
+		
 		if (auto ptr = dynamic_cast<PlanetSun*>(other)) {
-			scene->ChangeScene(SceneType::IntoTheSunEnd);
+			auto ptr1 = std::make_shared<ObjectTimer>(env);
+			ptr1->SetTimer(1, [this]() {
+				scene->ChangeScene(SceneType::IntoTheSunEnd); });
+			ptr1->StartTimer();
+			scene->AddObject(ptr1);
+			hit = true;
 			return;
 		}
 		if (auto ptr = dynamic_cast<PlanetJupiter*>(other)) {
-			scene->ChangeScene(SceneType::JupiterEnd);
+			auto ptr1 = std::make_shared<ObjectTimer>(env);
+			ptr1->SetTimer(1, [this]() {
+				scene->ChangeScene(SceneType::JupiterEnd); });
+			ptr1->StartTimer();
+			scene->AddObject(ptr1);
+			hit = true;
 			return;
 		}
 		if (auto ptr = dynamic_cast<PlanetMars*>(other)) {
-			scene->ChangeScene(SceneType::MarsEnd);
+			auto ptr1 = std::make_shared<ObjectTimer>(env);
+			ptr1->SetTimer(1, [this]() {
+				scene->ChangeScene(SceneType::MarsEnd); });
+			ptr1->StartTimer();
+			scene->AddObject(ptr1);
+			hit = true;
 			return;
 		}
 		if (auto ptr = dynamic_cast<PlanetNeptune*>(other)) {
-			scene->ChangeScene(SceneType::NeptuneEnd);
+			auto ptr1 = std::make_shared<ObjectTimer>(env);
+			ptr1->SetTimer(1, [this]() {
+				scene->ChangeScene(SceneType::NeptuneEnd); });
+			ptr1->StartTimer();
+			scene->AddObject(ptr1);
+			hit = true;
 			return;
 		}
 	}

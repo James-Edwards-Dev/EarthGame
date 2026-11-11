@@ -5,6 +5,7 @@
 #include <random>
 #include "../Sprite.h"
 #include "../Scene.h"
+#include "../PolyLine2D.h"
 
 class BasePlanet : public BasePhysicalObject {
 protected:
@@ -13,6 +14,10 @@ protected:
 	Sprite sprite;
 	virtual std::string GetSpritePath() const = 0;
 	bool isClockwise;
+	PolyLine2D* trail;
+	float trailTick;
+	float trailPointTime = 0.1f;
+	int trailAmount = 40;
 
 public:
 	BasePlanet(GamesEngineeringBase::Window& canvas) : BasePhysicalObject(canvas) {
@@ -29,6 +34,8 @@ public:
 		isGravitySource = true;
 		isStatic = false;
 		isClockwise = true;
+		trail = nullptr;
+		trailTick = 0.f;
 
 		orbitHeight = 0;
 	}
@@ -54,6 +61,14 @@ public:
 			
 			velocity = curPhysicState.velocityS;
 		}
+
+		auto ptr = std::make_shared<PolyLine2D>(env);
+		trail = ptr.get();
+		ptr->lineColor = { 255,255,255,255 };
+		ptr->renderOrder = RenderOrder::First;
+		ptr->thickness = collisionRadius / 3;
+		ptr->points.push_back(globalPosition);
+		scene->AddObject(ptr);
 	}
 
 	void FixedUpdate(const float& dt) override {
@@ -61,9 +76,20 @@ public:
 		BasePhysicalObject::UpdatePhysicPosition(dt);
 	}
 
-	void VisualUpdate(const float& dt) override {}
+	void VisualUpdate(const float& dt) override {
+		trailTick += dt;
+		if (trailTick > trailPointTime) {
+			trailTick -= trailPointTime;
+			trail->points.push_back(globalPosition);
+			if (trail->points.size() > trailAmount) {
+				trail->points.erase(trail->points.begin());
+			}
+		}
+	}
 
-	void OnDestroy() override {}
+	void OnDestroy() override {
+		trail->isPendingDestroy = true;
+	}
 
 	// this needs to be set before adding to the scene
 	void SetParentPlanet(std::weak_ptr<BasePlanet> p) { parentPlanet = p; }

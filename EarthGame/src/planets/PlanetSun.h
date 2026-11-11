@@ -14,13 +14,14 @@ public:
 		maxVelocity = 100;
 		rotation = 0;
 		mass = 9000;
-		renderOrder = RenderOrder::Second;
+		renderOrder = RenderOrder::Third;
 		prevState = { globalPosition, scale, rotation };
 		curState = { globalPosition, scale, rotation };
 		canCollide = true;
 		collisionRadius = 120;
 		isGravitySource = true;
 		isStatic = true;
+		isTrigger = true;
 
 		orbitHeight = 0;
 	}
