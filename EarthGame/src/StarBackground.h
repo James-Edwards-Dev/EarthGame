@@ -50,21 +50,20 @@ public:
 
 		for (int j = tile.minY; j <= tile.maxY; j++) {
 			for (int i = tile.minX; i <= tile.maxX; i++) {
-				Vector2 position_1 = camera.GetGlobalPosition(i, j) * 0.6f;
-				Vector2 position_2 = position_1;
+				Vector2 camera_pos = camera.GetGlobalPosition(i, j) * 0.6f;
 
-				Vector2 gp = { (float)i, (float)j };
-				position_1 = position_1 * 0.3f + gp * 0.7f;
-				position_2 = position_2 * 0.1f + gp * 0.9f;
+				Vector2 global_pos = { (float)i, (float)j };
+				Vector2 layer_1_pos = camera_pos * 0.3f + global_pos * 0.7f;
+				Vector2 layer_2_pos = camera_pos * 0.1f + global_pos * 0.9f;
 
-				ColorRGBA color_1 = GetColorAt(position_1.x, position_1.y);
-				ColorRGBA color_2 = GetColorAt(position_2.x, position_2.y);
+				ColorRGBA color_1 = GetColorAt(layer_1_pos.x, layer_1_pos.y);
+				ColorRGBA color_2 = GetColorAt(layer_2_pos.x, layer_2_pos.y);
 
 				color = {
 					std::max(color_1.r, color_2.r),
 					std::max(color_1.g, color_2.g),
 					std::max(color_1.b, color_2.b),
-					255 };
+					std::max(color_1.a, color_2.a) };
 
 				camera.DrawOnCanvas(env, backBuffer, i, j, color);
 			}
