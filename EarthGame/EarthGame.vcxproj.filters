@@ -33,6 +33,9 @@
     <ClCompile Include="src\planets\PlanetSun.h">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\planets\PlanetSatellite.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h">

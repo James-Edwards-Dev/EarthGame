@@ -21,6 +21,6 @@ public:
 		isGravitySource = true;
 		isStatic = false;
 
-		orbitHeight = 500;
+		orbitHeight = 450;
 	}
 };
