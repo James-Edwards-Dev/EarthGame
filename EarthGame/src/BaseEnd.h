@@ -30,8 +30,8 @@ protected:
 			return "./assets/ends/TheEyeEnd.png";
 		case SceneType::CometEnd:
 			return "./assets/ends/CometEnd.png";
-		//case SceneType::HiddenEnd:
-		//	return 
+		case SceneType::HiddenEnd:
+			return "./assets/ends/WormholeEnd.png";
 		default:
 			return "./assets/ends/HesitateEnd.png";
 		}

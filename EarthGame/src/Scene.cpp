@@ -386,6 +386,14 @@ void Scene::InitiateChangedScene() {
 		AddObject(ptr);
 		break;
 	}
+	case SceneType::HiddenEnd: {
+		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
+		SetCameraTarget(nullptr);
+		camera.globalPosition = { 0,0 };
+		FOV = 720;
+		AddObject(ptr);
+		break;
+	}
 	default:
 		break;
 	}
