@@ -6,6 +6,7 @@
 #include "../Sprite.h"
 #include "../Scene.h"
 #include "../PolyLine2D.h"
+#include "../MyMath.h"
 
 class BasePlanet : public BasePhysicalObject {
 protected:
@@ -19,6 +20,9 @@ protected:
 	float trailPointTime = 0.1f;
 	int trailAmount = 40;
 	bool isComet; // oval orbit
+
+	bool selfTurning = true;
+	float rotationSpeed = PI / 4.f;
 
 public:
 	BasePlanet(GamesEngineeringBase::Window& canvas) : BasePhysicalObject(canvas) {
@@ -77,6 +81,14 @@ public:
 	}
 
 	void FixedUpdate(const float& dt) override {
+		if (selfTurning) {
+			if (isClockwise) {
+				rotation = MyMath::WrapAngle(rotation - rotationSpeed * dt);
+			}
+			else {
+				rotation = MyMath::WrapAngle(rotation + rotationSpeed * dt);
+			}
+		}
 		force = scene->GetGravityOn(this);
 		BasePhysicalObject::UpdatePhysicPosition(dt);
 	}

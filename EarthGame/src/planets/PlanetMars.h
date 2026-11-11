@@ -20,6 +20,7 @@ public:
 		collisionRadius = 30;
 		isGravitySource = true;
 		isStatic = false;
+		rotationSpeed = PI / 2.f;
 
 		orbitHeight = 450;
 	}

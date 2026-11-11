@@ -40,6 +40,8 @@ public:
 		isGravitySource = true;
 		isStatic = false;
 		dirLine = nullptr;
+		selfTurning = true;
+		rotationSpeed = PI;
 
 		orbitHeight = 250;
 		hit = false;

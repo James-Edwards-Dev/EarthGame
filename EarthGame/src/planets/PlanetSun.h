@@ -22,6 +22,7 @@ public:
 		isGravitySource = true;
 		isStatic = true;
 		isTrigger = true;
+		selfTurning = PI / 16;
 
 		orbitHeight = 0;
 	}
