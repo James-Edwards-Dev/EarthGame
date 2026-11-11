@@ -4,7 +4,7 @@
 class PlanetSun : public BasePlanet {
 private:
 	std::string GetSpritePath() const override {
-		return "./assets/planet00.png";
+		return "./assets/sun-planet.png";
 	}
 
 public:

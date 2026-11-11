@@ -171,6 +171,9 @@
     <ClCompile Include="src\PolyLine2D.cpp" />
     <ClCompile Include="src\Scene.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Downloads\Planets 1.0\Star\sun-planet.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
