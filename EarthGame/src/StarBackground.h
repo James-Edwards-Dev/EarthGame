@@ -5,8 +5,7 @@
 #include "../Constants.h"
 #include <iostream>
 
-class StarBackground : public BaseGameObject 
-{
+class StarBackground : public BaseGameObject {
 	Sprite sprite;
 public:
 	StarBackground(GamesEngineeringBase::Window& win) : BaseGameObject(win) {
@@ -25,16 +24,20 @@ public:
 	void OnDestroy() override {}
 
 	ColorRGBA GetColorAt(const float& u, const float& v) const override {
-		int u2 = static_cast<int>(u) % static_cast<int>(scale.x);
-		int v2 = static_cast<int>(v) % static_cast<int>(scale.x);
+		float uu;
+		float vv;
+		uu = (u - floor(u / scale.x) * scale.x) / scale.x;
+		vv = (v - floor(v / scale.y) * scale.y) / scale.y;
 
-		return sprite.GetColorAt(u2, v2);
+		return sprite.GetColorAt(uu, vv);
 	}
 
 	unsigned char GetAlphaAt(const float& u, const float& v) const override {
-		float u2 = u - floor(u / scale.x) * scale.x;
-		float v2 = v - floor(v / scale.y) * scale.y;
-		return sprite.GetAlphaAt(u2, v2);
+		float uu;
+		float vv;
+		uu = (u - floor(u / scale.x) * scale.x) / scale.x;
+		vv = (v - floor(v / scale.y) * scale.y) / scale.y;
+		return sprite.GetAlphaAt(uu, vv);
 	}
 
 	virtual bool DepthTest(float alpha, const Camera& camera, const short& curDepth, const ScreenAABB& tile) const override {
