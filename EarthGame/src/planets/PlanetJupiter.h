@@ -12,7 +12,7 @@ public:
 		: BasePlanet(canvas) {
 		scale = Vector2(200, 200);
 		rotation = 0;
-		mass = 200;
+		mass = 300;
 		renderOrder = RenderOrder::Second;
 		canCollide = true;
 		collisionRadius = 80;

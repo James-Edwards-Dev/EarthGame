@@ -11,6 +11,7 @@
 #include "planets/PlanetJupiter.h"
 #include "planets/PlanetMars.h"
 #include "planets/PlanetNeptune.h"
+#include "planets/PlanetSatellite.h"
 
 Scene::Scene(GamesEngineeringBase::Window& window, Camera& camera) 
 	: canvas(window), camera(camera) {
@@ -307,6 +308,9 @@ void Scene::InitiateChangedScene() {
 			auto ptr = std::make_shared<PlanetJupiter>(canvas);
 			ptr->SetParentPlanet(sunPtr);
 			AddObject(ptr);
+			auto ptr1 = std::make_shared<PlanetSattelite>(canvas);
+			ptr1->SetParentPlanet(ptr);
+			AddObject(ptr1);
 		}
 		{
 			auto ptr = std::make_shared<PlanetMars>(canvas);

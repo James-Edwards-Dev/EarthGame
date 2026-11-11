@@ -57,7 +57,7 @@ public:
 			else {
 				curPhysicState.velocityS =
 					p->curPhysicState.velocityS + Vector2{ -(float)std::sin(phase) * speed, (float)std::cos(phase) * speed };
-			}
+			}		
 			
 			velocity = curPhysicState.velocityS;
 		}

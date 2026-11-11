@@ -30,6 +30,12 @@
     <ClCompile Include="src\LaunchController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\planets\PlanetSun.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\planets\PlanetSatellite.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h">
@@ -75,6 +81,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\LaunchController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BaseEnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ObjectTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\planets\PlanetEarth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\planets\PlanetJupiter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\planets\PlanetMars.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\planets\PlanetNeptune.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\planets\BasePlanet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
