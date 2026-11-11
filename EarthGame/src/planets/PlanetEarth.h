@@ -10,6 +10,7 @@
 #include "PlanetMars.h"
 #include "PlanetNeptune.h"
 #include "../ObjectTimer.h"
+#include "PlanetComet.h"
 
 class PlanetEarth : public BasePlanet {
 private:
@@ -138,6 +139,15 @@ public:
 			auto ptr1 = std::make_shared<ObjectTimer>(env);
 			ptr1->SetTimer(1, [this]() {
 				scene->ChangeScene(SceneType::NeptuneEnd); });
+			ptr1->StartTimer();
+			scene->AddObject(ptr1);
+			hit = true;
+			return;
+		}
+		if (auto ptr = dynamic_cast<PlanetComet*>(other)) {
+			auto ptr1 = std::make_shared<ObjectTimer>(env);
+			ptr1->SetTimer(1, [this]() {
+				scene->ChangeScene(SceneType::CometEnd); });
 			ptr1->StartTimer();
 			scene->AddObject(ptr1);
 			hit = true;

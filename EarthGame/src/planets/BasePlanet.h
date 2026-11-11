@@ -18,6 +18,7 @@ protected:
 	float trailTick;
 	float trailPointTime = 0.1f;
 	int trailAmount = 40;
+	bool isComet; // oval orbit
 
 public:
 	BasePlanet(GamesEngineeringBase::Window& canvas) : BasePhysicalObject(canvas) {
@@ -36,6 +37,7 @@ public:
 		isClockwise = true;
 		trail = nullptr;
 		trailTick = 0.f;
+		isComet = false;
 
 		orbitHeight = 0;
 	}
@@ -44,6 +46,9 @@ public:
 		sprite.Load(GetSpritePath());
 		if (auto p = parentPlanet.lock()) {
 			float speed = std::sqrt(GRAVITY_CONSTANT / orbitHeight * p->mass);
+			if (isComet) {
+				speed *= 0.5f;
+			}
 			std::random_device rd;
 			std::mt19937 rng(rd());
 			std::uniform_real_distribution<> dis(0.0, TWO_PI);

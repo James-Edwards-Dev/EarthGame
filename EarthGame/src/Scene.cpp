@@ -12,6 +12,7 @@
 #include "planets/PlanetMars.h"
 #include "planets/PlanetNeptune.h"
 #include "planets/PlanetSatellite.h"
+#include "planets/PlanetComet.h"
 
 Scene::Scene(GamesEngineeringBase::Window& window, Camera& camera) 
 	: canvas(window), camera(camera) {
@@ -322,6 +323,11 @@ void Scene::InitiateChangedScene() {
 			ptr->SetParentPlanet(sunPtr);
 			AddObject(ptr);
 		}
+		{
+			auto ptr = std::make_shared<PlanetComet>(canvas);
+			ptr->SetParentPlanet(sunPtr);
+			AddObject(ptr);
+		}
 		break;
 	}
 	case SceneType::HesitateEnd: {
@@ -365,6 +371,14 @@ void Scene::InitiateChangedScene() {
 		break;
 	}
 	case SceneType::TheEyeEnd: {
+		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
+		SetCameraTarget(nullptr);
+		camera.globalPosition = { 0,0 };
+		FOV = 720;
+		AddObject(ptr);
+		break;
+	}
+	case SceneType::CometEnd: {
 		auto ptr = std::make_shared<BaseEnd>(canvas, nextScene);
 		SetCameraTarget(nullptr);
 		camera.globalPosition = { 0,0 };
