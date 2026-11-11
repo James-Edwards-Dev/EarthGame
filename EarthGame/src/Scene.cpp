@@ -12,6 +12,7 @@
 #include "planets/PlanetMars.h"
 #include "planets/PlanetNeptune.h"
 #include "planets/PlanetSatellite.h"
+#include "StarBackground.h"
 #include "planets/PlanetComet.h"
 
 Scene::Scene(GamesEngineeringBase::Window& window, Camera& camera) 
@@ -299,6 +300,10 @@ void Scene::InitiateChangedScene() {
 		FOV = 3840;
 		auto sunPtr = std::make_shared<PlanetSun>(canvas);
 		AddObject(sunPtr);
+		{
+			auto ptr = std::make_shared<StarBackground>(canvas);
+			AddObject(ptr);
+		}
 		{
 			auto ptr = std::make_shared<PlanetEarth>(canvas);
 			ptr->SetParentPlanet(sunPtr);
