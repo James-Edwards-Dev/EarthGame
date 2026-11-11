@@ -9,7 +9,7 @@ private:
 
 public:
 	PlanetSun(GamesEngineeringBase::Window& canvas) : BasePlanet(canvas) {
-		scale = Vector2(300, 300);
+		scale = Vector2(500, 500);
 		globalPosition = { 0, 0 };
 		maxVelocity = 100;
 		rotation = 0;
