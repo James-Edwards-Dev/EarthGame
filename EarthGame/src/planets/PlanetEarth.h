@@ -10,6 +10,8 @@
 #include "PlanetMars.h"
 #include "PlanetNeptune.h"
 #include "../ObjectTimer.h"
+#include "PlanetComet.h"
+#include "PlanetSatellite.h"
 
 class PlanetEarth : public BasePlanet {
 private:
@@ -39,6 +41,8 @@ public:
 		isGravitySource = true;
 		isStatic = false;
 		dirLine = nullptr;
+		selfTurning = true;
+		rotationSpeed = PI;
 
 		orbitHeight = 250;
 		hit = false;
@@ -138,6 +142,24 @@ public:
 			auto ptr1 = std::make_shared<ObjectTimer>(env);
 			ptr1->SetTimer(1, [this]() {
 				scene->ChangeScene(SceneType::NeptuneEnd); });
+			ptr1->StartTimer();
+			scene->AddObject(ptr1);
+			hit = true;
+			return;
+		}
+		if (auto ptr = dynamic_cast<PlanetComet*>(other)) {
+			auto ptr1 = std::make_shared<ObjectTimer>(env);
+			ptr1->SetTimer(1, [this]() {
+				scene->ChangeScene(SceneType::CometEnd); });
+			ptr1->StartTimer();
+			scene->AddObject(ptr1);
+			hit = true;
+			return;
+		}
+		if (auto ptr = dynamic_cast<PlanetSattelite*>(other)) {
+			auto ptr1 = std::make_shared<ObjectTimer>(env);
+			ptr1->SetTimer(1, [this]() {
+				scene->ChangeScene(SceneType::HiddenEnd); });
 			ptr1->StartTimer();
 			scene->AddObject(ptr1);
 			hit = true;

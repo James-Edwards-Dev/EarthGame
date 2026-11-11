@@ -6,6 +6,7 @@
 #include "../Sprite.h"
 #include "../Scene.h"
 #include "../PolyLine2D.h"
+#include "../MyMath.h"
 
 class BasePlanet : public BasePhysicalObject {
 protected:
@@ -18,6 +19,10 @@ protected:
 	float trailTick;
 	float trailPointTime = 0.1f;
 	int trailAmount = 40;
+	bool isComet; // oval orbit
+
+	bool selfTurning = true;
+	float rotationSpeed = PI / 4.f;
 
 public:
 	BasePlanet(GamesEngineeringBase::Window& canvas) : BasePhysicalObject(canvas) {
@@ -36,6 +41,7 @@ public:
 		isClockwise = true;
 		trail = nullptr;
 		trailTick = 0.f;
+		isComet = false;
 
 		orbitHeight = 0;
 	}
@@ -44,6 +50,9 @@ public:
 		sprite.Load(GetSpritePath());
 		if (auto p = parentPlanet.lock()) {
 			float speed = std::sqrt(GRAVITY_CONSTANT / orbitHeight * p->mass);
+			if (isComet) {
+				speed *= 0.5f;
+			}
 			std::random_device rd;
 			std::mt19937 rng(rd());
 			std::uniform_real_distribution<> dis(0.0, TWO_PI);
@@ -72,6 +81,14 @@ public:
 	}
 
 	void FixedUpdate(const float& dt) override {
+		if (selfTurning) {
+			if (isClockwise) {
+				rotation = MyMath::WrapAngle(rotation - rotationSpeed * dt);
+			}
+			else {
+				rotation = MyMath::WrapAngle(rotation + rotationSpeed * dt);
+			}
+		}
 		force = scene->GetGravityOn(this);
 		BasePhysicalObject::UpdatePhysicPosition(dt);
 	}

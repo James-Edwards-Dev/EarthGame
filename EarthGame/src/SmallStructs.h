@@ -48,4 +48,6 @@ enum class SceneType {
 	MarsEnd,
 	NeptuneEnd,
 	TheEyeEnd,
+	CometEnd,
+	HiddenEnd,
 };
